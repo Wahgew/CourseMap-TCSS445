@@ -9,19 +9,19 @@
 
 
 CREATE TABLE STUDENT
-      (Fname              VARCHAR(15)          NOT NULL,
+      (FName              VARCHAR(15)          NOT NULL,
        LName              VARCHAR(15)          NOT NULL,
        StuEmail           VARCHAR(15)          NOT NULL,
-       Major              VARCHAR(15)             
-      PRIMARY KEY (email) );
+       Major              VARCHAR(15)          DEFAULT 'COMP SCI',   
+      PRIMARY KEY (StuEmail));
 
 CREATE TABLE TIME_RECORD
       (RecordID           INT                  NOT NULL,
        StudentEmail       VARCHAR(15)          NOT NULL,
        AssignID           INT                  NOT NULL,
-       TimeInput          Double(16)           NOT NULL,
+       TimeInput          Double(16)           DEFAULT 1,
       PRIMARY KEY (RecordID),
-      FOREIGN KEY (StudentEmail) REFERENCES STUDENT(Stuemail),
+      FOREIGN KEY (StudentEmail) REFERENCES STUDENT(StuEmail),
       FOREIGN KEY (AssignID) REFERENCES ASSIGNMENTS(AssignID)); 
 
 CREATE TABLE COURSE 
@@ -29,18 +29,18 @@ CREATE TABLE COURSE
        CourseName         VARCHAR(15),         NOT NULL,
        ProfEmail          VARCHAR(15)          NOT NULL,
       PRIMARY KEY (CourseID),
-      FOREIGN KEY (ProffessorID) REFERENCES PROFESSOR(AssigID) );
+      FOREIGN KEY (ProfEmail) REFERENCES PROFESSOR(ProfEmail) );
 
 CREATE TABLE ASSIGNMENTS
-      (AssingID           INT                  NOT NULL, 
+      (AssignID           INT                  NOT NULL, 
        CourseID           INT                  NOT NULL, 
-       AssingmentType     VARCHAR(15)          NOT NULL,
+       AssignmentType     VARCHAR(15)          NOT NULL,
        StuAvgTime         DOUBLE(16)           NOT NULL,
-      PRIMARY KEY (AssingID),
+      PRIMARY KEY (AssignID),
       FOREIGN KEY (CourseID) REFERENCES COURSE(CourseID) );
 
-CREATE TABLE PROFEFESSOR
-      (Fname              VARCHAR(15)          NOT NULL,
-       Lname              VARCHAR(15)          NOT NULL,
+CREATE TABLE PROFESSOR
+      (FName              VARCHAR(15)          NOT NULL,
+       LName              VARCHAR(15)          NOT NULL,
        ProfEmail          VARCHAR(15)          NOT NULL,
       PRIMARY KEY (ProfEmail) );
