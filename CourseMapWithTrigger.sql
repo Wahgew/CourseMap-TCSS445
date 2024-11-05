@@ -80,7 +80,7 @@ END//
 
 DELIMITER ;
 
---DATA
+-- DATA
 INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('Jane', 'Moore', 'jmoore1@uw.edu', 'COMP SCI');
 INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('Alex', 'Williams', 'awilliams2@uw.edu', 'COMP SCI');
 INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('Alice', 'Jones', 'ajones3@uw.edu', 'COMP SCI');
