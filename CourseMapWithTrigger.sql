@@ -61,7 +61,7 @@ AFTER INSERT ON TIME_RECORD
 FOR EACH ROW
 BEGIN
     UPDATE ASSIGNMENTS
-    SET StuAvgTime = (SELECT AVG(TimeInput)
+    SET StuAvgTime = (SELECT ROUND(AVG(TimeInput),2)
                       FROM TIME_RECORD
                       WHERE AssignID = NEW.AssignID)
     WHERE AssignID = NEW.AssignID;
@@ -72,7 +72,7 @@ AFTER UPDATE ON TIME_RECORD
 FOR EACH ROW
 BEGIN
     UPDATE ASSIGNMENTS
-    SET StuAvgTime = (SELECT AVG(TimeInput)
+    SET StuAvgTime = (SELECT ROUND(AVG(TimeInput),2)
                       FROM TIME_RECORD
                       WHERE AssignID = NEW.AssignID)
     WHERE AssignID = NEW.AssignID;
