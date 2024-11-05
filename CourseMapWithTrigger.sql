@@ -54,8 +54,10 @@ CREATE TABLE TIME_RECORD (
 );
 
 -- Trigger to update StuAvgTime in ASSIGNMENTS table
-CREATE TRIGGER update_stu_avg_time
-AFTER INSERT OR UPDATE ON TIME_RECORD
+DELIMITER //
+
+CREATE TRIGGER update_stu_avg_time_insert
+AFTER INSERT ON TIME_RECORD
 FOR EACH ROW
 BEGIN
     UPDATE ASSIGNMENTS
@@ -63,7 +65,20 @@ BEGIN
                       FROM TIME_RECORD
                       WHERE AssignID = NEW.AssignID)
     WHERE AssignID = NEW.AssignID;
-END;
+END//
+
+CREATE TRIGGER update_stu_avg_time_update
+AFTER UPDATE ON TIME_RECORD
+FOR EACH ROW
+BEGIN
+    UPDATE ASSIGNMENTS
+    SET StuAvgTime = (SELECT AVG(TimeInput)
+                      FROM TIME_RECORD
+                      WHERE AssignID = NEW.AssignID)
+    WHERE AssignID = NEW.AssignID;
+END//
+
+DELIMITER ;
 
 --DATA
 INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('Jane', 'Moore', 'jmoore1@uw.edu', 'COMP SCI');
