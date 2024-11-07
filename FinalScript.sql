@@ -16,8 +16,7 @@ CREATE DATABASE CourseMap;
 USE CourseMap;
 
 -- *************************** 
--- STUDENT: store data about a STUDENT 
--- Create tables
+-- STUDENT: store data about STUDENT 
 CREATE TABLE STUDENT (
     FName          VARCHAR(30)    NOT NULL,
     LName          VARCHAR(30)    NOT NULL,
@@ -26,7 +25,8 @@ CREATE TABLE STUDENT (
     PRIMARY KEY (StuEmail),
     CHECK (StuEmail LIKE '%@uw.edu')
 );
-
+-- *************************** 
+-- PROFESSOR: store data about PROFESSOR 
 CREATE TABLE PROFESSOR (
     FName          VARCHAR(30)    NOT NULL,
     LName          VARCHAR(30)    NOT NULL,
@@ -34,7 +34,8 @@ CREATE TABLE PROFESSOR (
     PRIMARY KEY (ProfEmail),
     CHECK (ProfEmail LIKE '%@uw.edu')
 );
-
+-- *************************** 
+-- COURSE: store data about COURSE 
 CREATE TABLE COURSE (
     CourseID       INT           NOT NULL,
     CourseName     VARCHAR(30)   DEFAULT 'COMP SCI COURSE',
@@ -43,7 +44,8 @@ CREATE TABLE COURSE (
     FOREIGN KEY (ProfEmail) REFERENCES PROFESSOR(ProfEmail) 
         ON DELETE CASCADE ON UPDATE CASCADE
 );
-
+-- *************************** 
+-- ASSIGNMENTS: store data about ASSIGNMENTS 
 CREATE TABLE ASSIGNMENTS (
     AssignID       INT           NOT NULL, 
     CourseID       INT           NOT NULL, 
@@ -53,7 +55,8 @@ CREATE TABLE ASSIGNMENTS (
     FOREIGN KEY (CourseID) REFERENCES COURSE(CourseID) 
         ON DELETE CASCADE ON UPDATE CASCADE
 );
-
+-- *************************** 
+-- TIME_RECORD: store data about TIME_RECORD 
 CREATE TABLE TIME_RECORD (
     RecordID       INT           NOT NULL,
     StudentEmail   VARCHAR(50)   NOT NULL,
@@ -66,10 +69,9 @@ CREATE TABLE TIME_RECORD (
         ON DELETE CASCADE ON UPDATE CASCADE,
     CHECK (TimeInput > 0)
 );
-
+-- ****************************
 -- Trigger to update StuAvgTime in ASSIGNMENTS table
 DELIMITER //
-
 CREATE TRIGGER update_stu_avg_time_insert
 AFTER INSERT ON TIME_RECORD
 FOR EACH ROW
@@ -93,7 +95,12 @@ BEGIN
 END//
 
 DELIMITER ;
-
+-- *************************** 
+-- *************************** 
+-- Part B 
+-- *************************** 
+-- Sample data for STUDENT 
+-- Summary: store data into STUDENT 
 -- DATA
 INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('Jane', 'Moore', 'jmoore1@uw.edu', 'COMP SCI');
 INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('Alex', 'Williams', 'awilliams2@uw.edu', 'COMP SCI');
@@ -196,6 +203,9 @@ INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('John', 'Taylor', 'j
 INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('Ethan', 'Brown', 'ebrown99@uw.edu', 'COMP SCI');
 INSERT INTO STUDENT (FName, LName, StuEmail, Major) VALUES ('Jane', 'Moore', 'jmoore100@uw.edu', 'COMP SCI');
 
+-- *************************** 
+-- Sample data for PROFESSOR 
+-- Summary: store data into PROFESSOR
 INSERT INTO PROFESSOR (FName, LName, ProfEmail) VALUES ('Jane', 'Miller', 'jmiller1@uw.edu');
 INSERT INTO PROFESSOR (FName, LName, ProfEmail) VALUES ('Mary', 'Davis', 'mdavis2@uw.edu');
 INSERT INTO PROFESSOR (FName, LName, ProfEmail) VALUES ('Eyhab', 'Johnson', 'ejohnson3@uw.edu');
@@ -207,6 +217,9 @@ INSERT INTO PROFESSOR (FName, LName, ProfEmail) VALUES ('Liam', 'Johnson', 'ljoh
 INSERT INTO PROFESSOR (FName, LName, ProfEmail) VALUES ('Monika', 'Johnson', 'mjohnson9@uw.edu');
 INSERT INTO PROFESSOR (FName, LName, ProfEmail) VALUES ('Mia', 'Williams', 'mwilliams10@uw.edu');
 
+-- *************************** 
+-- Sample data for COURSE 
+-- Summary: store data into COURSE
 INSERT INTO COURSE (CourseID, CourseName, ProfEmail) VALUES (1, 'CSS001', 'jmiller1@uw.edu');
 INSERT INTO COURSE (CourseID, CourseName, ProfEmail) VALUES (2, 'CSS002', 'mdavis2@uw.edu');
 INSERT INTO COURSE (CourseID, CourseName, ProfEmail) VALUES (3, 'CSS003', 'ejohnson3@uw.edu');
@@ -218,6 +231,9 @@ INSERT INTO COURSE (CourseID, CourseName, ProfEmail) VALUES (8, 'CSS008', 'ljohn
 INSERT INTO COURSE (CourseID, CourseName, ProfEmail) VALUES (9, 'CSS009', 'mjohnson9@uw.edu');
 INSERT INTO COURSE (CourseID, CourseName, ProfEmail) VALUES (10, 'CSS010', 'mwilliams10@uw.edu');
 
+-- *************************** 
+-- Sample data for ASSIGNMENTS 
+-- Summary: store data into ASSIGNMENTS
 INSERT INTO ASSIGNMENTS (AssignID, CourseID, AssignmentType, StuAvgTime) VALUES (1, 1, 'Project', 1);
 INSERT INTO ASSIGNMENTS (AssignID, CourseID, AssignmentType, StuAvgTime) VALUES (2, 1, 'Assignment', 1);
 INSERT INTO ASSIGNMENTS (AssignID, CourseID, AssignmentType, StuAvgTime) VALUES (3, 1, 'Quiz', 1);
@@ -259,6 +275,9 @@ INSERT INTO ASSIGNMENTS (AssignID, CourseID, AssignmentType, StuAvgTime) VALUES 
 INSERT INTO ASSIGNMENTS (AssignID, CourseID, AssignmentType, StuAvgTime) VALUES (39, 10, 'Discussion Post', 1);
 INSERT INTO ASSIGNMENTS (AssignID, CourseID, AssignmentType, StuAvgTime) VALUES (40, 10, 'Discussion Post', 1);
 
+-- *************************** 
+-- Sample data for TIME_RECORD 
+-- Summary: store data into TIME_RECORD
 INSERT INTO TIME_RECORD (RecordID, StudentEmail, AssignID, TimeInput) VALUES (1, 'jmoore1@uw.edu', 17, 8.59);
 INSERT INTO TIME_RECORD (RecordID, StudentEmail, AssignID, TimeInput) VALUES (2, 'awilliams2@uw.edu', 15, 7.04);
 INSERT INTO TIME_RECORD (RecordID, StudentEmail, AssignID, TimeInput) VALUES (3, 'ajones3@uw.edu', 24, 3.18);
@@ -360,6 +379,10 @@ INSERT INTO TIME_RECORD (RecordID, StudentEmail, AssignID, TimeInput) VALUES (98
 INSERT INTO TIME_RECORD (RecordID, StudentEmail, AssignID, TimeInput) VALUES (99, 'ebrown99@uw.edu', 25, 5.00);
 INSERT INTO TIME_RECORD (RecordID, StudentEmail, AssignID, TimeInput) VALUES (100, 'jmoore100@uw.edu', 31, 3.09);
 
+-- *************************** 
+-- *************************** 
+-- Part C 
+-- **************
 -- Query 1
 -- Purpose: Lists each professor’s full name, the courses they teach, and the types of assignments in each course along with the average student time spent.
 -- Expected: A table showing the professor's name, the course name, each assignment type in that course, and the average student time spent.
@@ -370,8 +393,8 @@ SELECT CONCAT(P.FName, ' ', P.LName) AS ProfessorName,
 FROM professor P
 JOIN course C ON P.ProfEmail = C.ProfEmail
 JOIN assignments A ON C.CourseID = A.CourseID;
--- ***************************
 
+-- ***************************
 -- SQL Query 2
 -- Purpose: Find professors and their courses where the course average time is greater than a specified threshold (default 2 hours)
 -- Expected: A list of professor names, course names, and the course average time where the average course time is less than the threshold
@@ -393,8 +416,7 @@ WHERE c.CourseID = ANY (
 GROUP BY c.CourseName, p.Fname, p.Lname  -- Group by course and professor
 ORDER BY c.CourseName ASC;
 
-
-
+-- ***************************
 -- Query 3 
 -- Purpose: Find the assignments where the students spent more time than the average time spends by all students on the same assignment.
 -- Expected: Identify the students who might be struggling with the assignment specific assignments. 
@@ -407,7 +429,7 @@ WHERE TIME_RECORD.TimeInput >
      FROM TIME_RECORD TIME_RECORD_TWO
      WHERE TIME_RECORD.AssignID = TIME_RECORD.AssignID);
 
-
+-- ***************************
 -- SQL Query 4
 -- Purpose: Retrieves each student’s full name and email, and, if available, their time record ID and time input. Includes students with or without time records.
 -- Expected: A table displaying each student’s full name, email, time record ID, and time input (with NULL values for students without time records).
@@ -424,11 +446,8 @@ SELECT CONCAT(s.FName, ' ', s.LName) AS FullName,
        tr.TimeInput
 FROM STUDENT s
 RIGHT JOIN TIME_RECORD tr ON s.StuEmail = tr.StudentEmail;
+
 -- ***************************
-
-
-
-
 -- Query 5 
 -- Purpose: Determine the assignment that have an average student time that greater than 3.0 and have beenworked by at least 3 distinct student based on the students time record. 
 -- Expected: It return assignment with ID, course name, assignment type and the average completion time, where the assignment take over 3 hours to compete an average and have atleast 3 students who recorded time for them. 
@@ -444,7 +463,7 @@ JOIN TIME_RECORD ON ASSIGNMENTS.AssignID = TIME_RECORD.AssignID
 GROUP BY ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
 HAVING COUNT(DISTINCT TIME_RECORD.StudentEmail) >= 3;
 
-
+-- ***************************
 -- SQL Query 6
 -- Purpose: Calculates the average time each student has spent on assignments in each course they are enrolled in.
 -- Expected: A table showing each student’s name, email, the course name, and the average time spent on assignments in that course.
@@ -458,10 +477,8 @@ JOIN ASSIGNMENTS a ON tr.AssignID = a.AssignID
 JOIN COURSE c ON a.CourseID = c.CourseID
 GROUP BY st.StuEmail, c.CourseID
 ORDER BY StudentName, c.CourseName;
+
 -- ***************************
-
-
-
 -- Query 7
 -- Purpose: It determine how many assignment of each professor has and the average time of students take to complete the assignments.
 -- Expected: It returns a list of professors, including their name, and email, along with the total number of assignments they have and the average time students spend on that assignment. 
@@ -474,8 +491,7 @@ JOIN ASSIGNMENTS ON COURSE.CourseID = ASSIGNMENTS.CourseID
 GROUP BY PROFESSOR.ProfEmail, PROFESSOR.FName, PROFESSOR.LName
 ORDER BY AverageAssingmentTime DESC;
 
-
-
+-- ***************************
 -- Query 8
 -- Purpose: Find all students and their assignments where they spent more time 
 --          than the average time for that assignment
@@ -488,8 +504,7 @@ AND T.AssignID = A.AssignID
 AND T.TimeInput > A.StuAvgTime
 ORDER BY T.TimeInput DESC;
 
-
-
+-- ***************************
 -- SQL Query 9
 -- Purpose: Find students and the names of professors teaching their courses
 -- Expected: A list of students, professors, and course names.
@@ -505,7 +520,7 @@ JOIN PROFESSOR p ON c.ProfEmail = p.ProfEmail
 ORDER BY "Student Name";
 
 
-
+-- ***************************
 -- Query 10
 -- Purpose: Find all professors who teach courses with assignments where the 
 --          average student time exceeds 5 hours
@@ -517,3 +532,4 @@ WHERE P.ProfEmail = C.ProfEmail
 AND C.CourseID = A.CourseID
 AND A.StuAvgTime > 5
 ORDER BY A.StuAvgTime DESC;
+-- End of Script (November 7, 2024) 
