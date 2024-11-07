@@ -1,8 +1,22 @@
+-- Start of Sample SQL Script 
+/*  ******************************** 
+Project Phase II 
+Group 8 
+This SQL Script was tested on 
+mySQL. To run, simply 
+import this script file and run.  
+******************************** 
+*/ 
+-- *************************** 
+-- Part A 
+-- *************************** 
 -- Drop database if it exists
 DROP DATABASE IF EXISTS CourseMap;
 CREATE DATABASE CourseMap;
 USE CourseMap;
 
+-- *************************** 
+-- STUDENT: store data about a STUDENT 
 -- Create tables
 CREATE TABLE STUDENT (
     FName          VARCHAR(30)    NOT NULL,
