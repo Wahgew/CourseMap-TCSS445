@@ -1,8 +1,14 @@
--- SQL Query 1
--- Purpose:
--- Expected: 
-
-
+-- Query 1
+-- Purpose: Lists each professor’s full name, the courses they teach, and the types of assignments in each course along with the average student time spent.
+-- Expected: A table showing the professor's name, the course name, each assignment type in that course, and the average student time spent.
+SELECT CONCAT(P.FName, ' ', P.LName) AS ProfessorName, 
+       C.CourseName, 
+       A.AssignmentType, 
+       A.StuAvgTime
+FROM professor P
+JOIN course C ON P.ProfEmail = C.ProfEmail
+JOIN assignments A ON C.CourseID = A.CourseID;
+-- ***************************
 
 -- SQL Query 2
 -- Purpose: Find professors and their courses where the course average time is greater than a specified threshold (default 2 hours)
@@ -34,8 +40,23 @@ ORDER BY c.CourseName ASC;
 
 
 -- SQL Query 4
--- Purpose:
--- Expected: 
+-- Purpose: Retrieves each student’s full name and email, and, if available, their time record ID and time input. Includes students with or without time records.
+-- Expected: A table displaying each student’s full name, email, time record ID, and time input (with NULL values for students without time records).
+SELECT CONCAT(s.FName, ' ', s.LName) AS FullName, 
+       s.StuEmail, 
+       tr.RecordID, 
+       tr.TimeInput
+FROM STUDENT s
+LEFT JOIN TIME_RECORD tr ON s.StuEmail = tr.StudentEmail
+UNION
+SELECT CONCAT(s.FName, ' ', s.LName) AS FullName, 
+       s.StuEmail, 
+       tr.RecordID, 
+       tr.TimeInput
+FROM STUDENT s
+RIGHT JOIN TIME_RECORD tr ON s.StuEmail = tr.StudentEmail;
+-- ***************************
+
 
 
 
@@ -46,10 +67,19 @@ ORDER BY c.CourseName ASC;
 
 
 -- SQL Query 6
--- Purpose:
--- Expected: 
-
-
+-- Purpose: Calculates the average time each student has spent on assignments in each course they are enrolled in.
+-- Expected: A table showing each student’s name, email, the course name, and the average time spent on assignments in that course.
+SELECT CONCAT(st.FName, ' ', st.LName) AS StudentName, 
+       st.StuEmail, 
+       c.CourseName, 
+       AVG(tr.TimeInput) AS AvgTimeSpent
+FROM STUDENT st
+JOIN TIME_RECORD tr ON st.StuEmail = tr.StudentEmail
+JOIN ASSIGNMENTS a ON tr.AssignID = a.AssignID
+JOIN COURSE c ON a.CourseID = c.CourseID
+GROUP BY st.StuEmail, c.CourseID
+ORDER BY StudentName, c.CourseName;
+-- ***************************
 
 -- SQL Query 7
 -- Purpose:
