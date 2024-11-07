@@ -33,10 +33,17 @@ ORDER BY c.CourseName ASC;
 
 
 
--- SQL Query 3
--- Purpose:
--- Expected: 
-
+-- Query 3 
+-- Purpose: Find the assignments where the students spent more time than the average time spends by all students on the same assignment.
+-- Expected: Identify the students who might be struggling with the assignment specific assignments. 
+SELECT STUDENT.FName, STUDENT.LName, TIME_RECORD.TimeInput, ASSIGNMENTS.StuAvgTime
+FROM STUDENT 
+JOIN TIME_RECORD ON STUDENT.StuEmail = TIME_RECORD.StudentEmail
+JOIN ASSIGNMENTS ON TIME_RECORD.AssignID = ASSIGNMENTS.AssignID
+WHERE TIME_RECORD.TimeInput > 
+(SELECT AVG(TIME_RECORD_TWO.TimeInput)
+     FROM TIME_RECORD TIME_RECORD_TWO
+     WHERE TIME_RECORD.AssignID = TIME_RECORD.AssignID);
 
 
 -- SQL Query 4
@@ -60,10 +67,20 @@ RIGHT JOIN TIME_RECORD tr ON s.StuEmail = tr.StudentEmail;
 
 
 
--- SQL Query 5
--- Purpose:
--- Expected: 
-
+-- Query 5 
+-- Purpose: Determine the assignment that have an average student time that greater than 3.0 and have beenworked by at least 3 distinct student based on the students time record. 
+-- Expected: It return assignment with ID, course name, assignment type and the average completion time, where the assignment take over 3 hours to compete an average and have atleast 3 students who recorded time for them. 
+SELECT ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
+FROM ASSIGNMENTS
+JOIN COURSE ON ASSIGNMENTS.CourseID = COURSE.CourseID
+WHERE ASSIGNMENTS.StuAvgTime > 3.0
+INTERSECT
+SELECT ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
+FROM ASSIGNMENTS
+JOIN COURSE ON ASSIGNMENTS.CourseID = COURSE.CourseID
+JOIN TIME_RECORD ON ASSIGNMENTS.AssignID = TIME_RECORD.AssignID
+GROUP BY ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
+HAVING COUNT(DISTINCT TIME_RECORD.StudentEmail) >= 3;
 
 
 -- SQL Query 6
@@ -81,9 +98,19 @@ GROUP BY st.StuEmail, c.CourseID
 ORDER BY StudentName, c.CourseName;
 -- ***************************
 
--- SQL Query 7
--- Purpose:
--- Expected: 
+
+
+-- Query 7
+-- Purpose: It determine how many assignment of each professor has and the average time of students take to complete the assignments.
+-- Expected: It returns a list of professors, including their name, and email, along with the total number of assignments they have and the average time students spend on that assignment. 
+SELECT PROFESSOR.FName, PROFESSOR.LName, PROFESSOR.ProfEmail, 
+	COUNT(DISTINCT ASSIGNMENTS.AssignID) AS Total_Assingments, 
+       ROUND(AVG(ASSIGNMENTS.StuAvgTime),2) AS AverageAssingmentTime
+FROM PROFESSOR
+JOIN COURSE ON PROFESSOR.ProfEmail = COURSE.ProfEmail
+JOIN ASSIGNMENTS ON COURSE.CourseID = ASSIGNMENTS.CourseID
+GROUP BY PROFESSOR.ProfEmail, PROFESSOR.FName, PROFESSOR.LName
+ORDER BY AverageAssingmentTime DESC;
 
 
 
@@ -114,6 +141,7 @@ JOIN ASSIGNMENTS a ON tr.AssignID = a.AssignID
 JOIN COURSE c ON a.CourseID = c.CourseID
 JOIN PROFESSOR p ON c.ProfEmail = p.ProfEmail
 ORDER BY "Student Name";
+
 
 
 -- Query 10
