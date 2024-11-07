@@ -87,9 +87,17 @@ ORDER BY StudentName, c.CourseName;
 
 
 
--- SQL Query 8
--- Purpose:
--- Expected: 
+-- Query 8
+-- Purpose: Find all students and their assignments where they spent more time 
+--          than the average time for that assignment
+-- Expected: Shows student names, assignment IDs, and their time spent when it 
+--          exceeds the assignment's average time, sorted by time spent
+SELECT S.FName, S.LName, T.AssignID, T.TimeInput, A.StuAvgTime
+FROM STUDENT S, TIME_RECORD T, ASSIGNMENTS A 
+WHERE S.StuEmail = T.StudentEmail 
+AND T.AssignID = A.AssignID
+AND T.TimeInput > A.StuAvgTime
+ORDER BY T.TimeInput DESC;
 
 
 
@@ -108,6 +116,14 @@ JOIN PROFESSOR p ON c.ProfEmail = p.ProfEmail
 ORDER BY "Student Name";
 
 
--- SQL Query 10
--- Purpose:
--- Expected: 
+-- Query 10
+-- Purpose: Find all professors who teach courses with assignments where the 
+--          average student time exceeds 5 hours
+-- Expected: Shows professor names and course details where assignments take 
+--          longer than 5 hours on average, sorted by average time
+SELECT P.FName AS ProfessorName, P.LName, C.CourseName, A.AssignID, A.StuAvgTime
+FROM PROFESSOR P, COURSE C, ASSIGNMENTS A
+WHERE P.ProfEmail = C.ProfEmail
+AND C.CourseID = A.CourseID
+AND A.StuAvgTime > 5
+ORDER BY A.StuAvgTime DESC;
