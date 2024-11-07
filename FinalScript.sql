@@ -21,7 +21,7 @@ USE CourseMap;
 CREATE TABLE STUDENT (
     FName          VARCHAR(30)    NOT NULL,
     LName          VARCHAR(30)    NOT NULL,
-    StuEmail       VARCHAR(30)    NOT NULL,
+    StuEmail       VARCHAR(50)    NOT NULL,
     Major          VARCHAR(30)    DEFAULT 'COMP SCI',   
     PRIMARY KEY (StuEmail),
     CHECK (StuEmail LIKE '%@uw.edu')
