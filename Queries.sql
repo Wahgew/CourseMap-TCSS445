@@ -64,9 +64,18 @@ ORDER BY c.CourseName ASC;
 
 
 -- SQL Query 9
--- Purpose:
--- Expected: 
-
+-- Purpose: Find students and the names of professors teaching their courses
+-- Expected: A list of students, professors, and course names.
+SELECT DISTINCT
+    CONCAT(s.FName, ' ', s.LName) AS "Student Name",
+    c.CourseName AS "Course Name",
+    CONCAT(p.FName, ' ', p.LName) AS "Professor Name"
+FROM STUDENT s
+JOIN TIME_RECORD tr ON s.StuEmail = tr.StudentEmail
+JOIN ASSIGNMENTS a ON tr.AssignID = a.AssignID
+JOIN COURSE c ON a.CourseID = c.CourseID
+JOIN PROFESSOR p ON c.ProfEmail = p.ProfEmail
+ORDER BY "Student Name";
 
 
 -- SQL Query 10
