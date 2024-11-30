@@ -71,7 +71,6 @@ coursemap/
 
 * `npm start`: Runs the server in development mode
 * `npm run dev`: Runs the server with nodemon for development
-* `npm test`: Runs the test suite (when implemented)
 
 
 
