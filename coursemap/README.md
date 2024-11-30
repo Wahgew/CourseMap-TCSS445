@@ -21,7 +21,7 @@ CourseMap is a web application designed to help UWT computer science students es
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/coursemap.git
+git clone https://github.com/Wahgew/CourseMap-TCSS445/coursemap.git
 cd coursemap
 ```
 
