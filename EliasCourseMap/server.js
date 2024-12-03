@@ -27,7 +27,9 @@ app.get('/query2/courses', query2Controller.getCourses);
 
 app.get('/query3/performance', query3Controller.getStudentPerformance);
 
-app.get('/query4',query4Controller.getProfessorStats);
+app.get('/query4/professors',query4Controller.getAllProfessors);
+app.get('/query4/stats',query4Controller.getProfessorStats);
+
 
 app.get('/query5/longAssignments', query5Controller.getLongAssignments);
 // Step 5: Start the Server 
