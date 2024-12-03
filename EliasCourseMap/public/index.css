@@ -20,7 +20,7 @@ img {
     width: 100%;
 }
 
-/* header {
+header {
     width: 100%;
     height: 65px;
     background: rgb(247, 247, 247);
@@ -29,7 +29,7 @@ img {
     justify-content: space-between;
     padding: 0 25px;
     margin: auto;
-} */
+}
 
 .logo {
     display: flex;
