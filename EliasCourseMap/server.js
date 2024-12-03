@@ -21,11 +21,13 @@ app.use(express.static('public'));
 // from the controllers. For the dropdownmenu selection, use a different 
 // method called get(controller name)Details. 
 app.get('/query1', query1Controller.getAllProfessors); 
-app.get('/query1/details', query1Controller.getProfessorDetails); 
+app.get('/query1/details', query1Controller.getProfessorDetails);
 
 
-app.get('/query3', query3Controller.getAllAssignments); 
-app.get('/query3', query3Controller.getFilteredAssignments); 
+
+
+app.get('/query3/performance', query3Controller.getStudentPerformance);
+
 app.get('/query4',query4Controller.getProfessorStats);
 
 app.get('/query5/longAssignments', query5Controller.getLongAssignments);
