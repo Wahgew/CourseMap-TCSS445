@@ -50,7 +50,7 @@ const getProfessorStats = (req, res) => {
             COUNT(DISTINCT ASSIGNMENTS.AssignID) AS Total_Assignments,
             ROUND(AVG(ASSIGNMENTS.StuAvgTime), 2) AS AverageAssignmentTime
         FROM PROFESSOR
-        JOIN COURSE ON PROFESSOR.ProfEmail = C.ProfEmail
+        JOIN COURSE ON PROFESSOR.ProfEmail = COURSE.ProfEmail
         JOIN ASSIGNMENTS ON COURSE.CourseID = ASSIGNMENTS.CourseID
         WHERE PROFESSOR.ProfEmail = ?
         GROUP BY PROFESSOR.ProfEmail, PROFESSOR.FName, PROFESSOR.LName
