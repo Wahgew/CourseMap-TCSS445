@@ -109,7 +109,7 @@
     
                 try {
                     console.log('Fetching stats...');
-                    const response = await fetch(`/query4/stats?ProfEmail=${encodeURIComponent(ProfEmail)}`);
+                    const response = await fetch(`/query4/stats?ProfEmail=${encodeURIComponent(ProfEmail)}`);  //changes this file route later
                     
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);

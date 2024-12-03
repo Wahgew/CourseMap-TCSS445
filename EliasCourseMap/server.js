@@ -25,7 +25,7 @@ app.get('/query1/details', query1Controller.getProfessorDetails);
 
 app.get('/query2/courses', query2Controller.getCourses); 
 
-app.get('/query3/performance', query3Controller.getStudentPerformance);
+app.get('/query3/assignments', query3Controller.getAssignments);
 
 app.get('/query4/professors',query4Controller.getAllProfessors);
 app.get('/query4/stats',query4Controller.getProfessorStats);

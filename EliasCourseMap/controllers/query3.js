@@ -1,36 +1,36 @@
 const db = require('../dbConfig');
 
-// Get student performance data
-const getStudentPerformance = (req, res) => {
+// Get assignments that are time-intensive and well-attempted
+const getAssignments = (req, res) => {
+
     
     const query = `
-        SELECT 
-            STUDENT.FName,
-            STUDENT.LName,
-            TIME_RECORD.TimeInput,
-            ASSIGNMENTS.StuAvgTime
-        FROM STUDENT 
-        JOIN TIME_RECORD ON STUDENT.StuEmail = TIME_RECORD.StudentEmail
-        JOIN ASSIGNMENTS ON TIME_RECORD.AssignID = ASSIGNMENTS.AssignID
-        WHERE TIME_RECORD.TimeInput > (
-            SELECT AVG(TIME_RECORD_TWO.TimeInput)
-            FROM TIME_RECORD TIME_RECORD_TWO
-            WHERE TIME_RECORD_TWO.AssignID = TIME_RECORD.AssignID
+        SELECT ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
+        FROM ASSIGNMENTS
+        JOIN COURSE ON ASSIGNMENTS.CourseID = COURSE.CourseID
+        WHERE ASSIGNMENTS.StuAvgTime > 3.0
+        AND ASSIGNMENTS.AssignID IN (
+            SELECT ASSIGNMENTS.AssignID
+            FROM ASSIGNMENTS
+            JOIN COURSE ON ASSIGNMENTS.CourseID = COURSE.CourseID
+            JOIN TIME_RECORD ON ASSIGNMENTS.AssignID = TIME_RECORD.AssignID
+            GROUP BY ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
+            HAVING COUNT(DISTINCT TIME_RECORD.StudentEmail) >= 3
         )
-        ORDER BY (TIME_RECORD.TimeInput - ASSIGNMENTS.StuAvgTime) DESC
+        ORDER BY ASSIGNMENTS.StuAvgTime DESC;
     `;
     
     db.query(query, (err, results) => {
         if (err) {
-            console.error('Error fetching student performance:', err);
-            res.status(500).send('Error retrieving student performance data');
+            console.error('Error fetching assignments:', err);
+            res.status(500).send('Error retrieving assignments data');
         } else {
-            console.log('Found student records:', results.length);
+            console.log('Found assignments:', results.length);
             res.json(results);
         }
     });
 };
 
 module.exports = {
-    getStudentPerformance
+    getAssignments
 };

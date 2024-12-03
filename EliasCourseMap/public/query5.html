@@ -101,7 +101,7 @@
             
             try {
                 console.log('Fetching long assignments...');
-                const response = await fetch('/query5/longAssignments');
+                const response = await fetch('/query5/longAssignments');  //changes this file route later
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

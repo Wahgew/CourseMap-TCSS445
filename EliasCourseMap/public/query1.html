@@ -99,7 +99,7 @@
 
                 try { 
                     // Send a request to the backend to fetch department details 
-                    const response = await fetch(`/query1/details?ProfEmail=${ProfEmail}`); 
+                    const response = await fetch(`/query1/details?ProfEmail=${ProfEmail}`);  //changes this file route later
                     const data = await response.json(); 
 
                     resultTableBody.innerHTML = ''; // Clear previous results 

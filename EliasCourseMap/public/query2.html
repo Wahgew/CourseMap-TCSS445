@@ -99,7 +99,7 @@
             
             try {
                 console.log('Fetching long courses...');
-                const response = await fetch('/query2/courses');
+                const response = await fetch('/query2/courses'); //changes this file route later
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
