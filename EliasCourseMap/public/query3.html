@@ -26,6 +26,7 @@
             </div>
         </div>
     </nav>
+
     <!-- Main Content -->
     <div class="content-section">
         <div class="container">
@@ -37,6 +38,7 @@
                         <option value="">Select a course</option>
                     </select>
                 </div>
+
                 <!-- Results Table -->
                 <div class="mt-4" id="resultSection" style="display: none;">
                     <h3>Assignment Details</h3>
@@ -52,9 +54,17 @@
                         <tbody id="resultTableBody"></tbody>
                     </table>
                 </div>
+
+                <!-- Error Message Section -->
+                <div id="errorSection" style="display: none;">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error:</strong> Unable to load data. Please try again later.
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <!-- Include Font Awesome and Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -64,10 +74,17 @@
             const dropdown = document.getElementById('courseDropdown');
             const resultSection = document.getElementById('resultSection');
             const resultTableBody = document.getElementById('resultTableBody');
+            const errorSection = document.getElementById('errorSection');
 
+            // Fetch course list for the dropdown menu
             try {
-                // Fetch course list for the dropdown menu
+                console.log('Fetching course list...');
                 const response = await fetch('/getAllAssignments'); // Backend endpoint
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
                 const assignments = await response.json();
                 const courses = [...new Set(assignments.map(a => a.CourseName))];
                 courses.forEach(courseName => {
@@ -78,6 +95,8 @@
                 });
             } catch (error) {
                 console.error('Error fetching courses:', error);
+                errorSection.style.display = 'block';  // Show error message
+                dropdown.disabled = true;  // Disable dropdown if there's an error
             }
 
             // Fetch and display assignment details when a course is selected
@@ -90,10 +109,14 @@
                 }
 
                 try {
-                    // Send a request to the backend to fetch assignment details
+                    console.log('Fetching filtered assignments...');
                     const response = await fetch(`/getFilteredAssignments?CourseName=${courseName}`);
-                    const data = await response.json();
 
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
                     resultTableBody.innerHTML = ''; // Clear previous results
                     resultSection.style.display = 'block';
 
@@ -113,6 +136,8 @@
                     }
                 } catch (error) {
                     console.error('Error fetching assignment details:', error);
+                    errorSection.style.display = 'block';  // Show error message if request fails
+                    resultSection.style.display = 'none'; // Hide result section
                 }
             });
         });
