@@ -25,7 +25,7 @@ const getAssignments = (req, res) => {
             console.error('Error fetching assignments:', err);
             res.status(500).send('Error retrieving assignments data');
         } else {
-            console.log('Found assignments:', results.length);
+            //console.log('Found assignments:', results.length);
             res.json(results);
         }
     });

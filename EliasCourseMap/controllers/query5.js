@@ -22,7 +22,7 @@ const getLongAssignments = (req, res) => {
             console.error('Error fetching long assignments:', err);
             res.status(500).send('Error retrieving long assignments');
         } else {
-            console.log('Found assignments:', results);
+            //console.log('Found assignments:', results);
             res.json(results);
         }
     });
