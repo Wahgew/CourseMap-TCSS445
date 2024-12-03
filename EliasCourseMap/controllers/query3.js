@@ -1,9 +1,16 @@
+//Elias Arriola
+//The following file is the backend of query3.html which queries for Course information.
+// Step 1: Import Required Libraries 
+// Import the database configuration to interact with the MySQL database.
 const db = require('../dbConfig');
 
-// Get assignments that are time-intensive and well-attempted
+// Step 2: Define Controller Functions 
+/** Determine the assignment that have an average student time
+ *  that greater than 3.0 and have beenworked by at least 3 distinct student 
+ * based on the students time record. */
 const getAssignments = (req, res) => {
 
-    
+    // Step 2.1: Construct SQL Query
     const query = `
         SELECT ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
         FROM ASSIGNMENTS
@@ -19,18 +26,20 @@ const getAssignments = (req, res) => {
         )
         ORDER BY ASSIGNMENTS.StuAvgTime DESC;
     `;
-    
+    // Step 2.2: Execute the Query
     db.query(query, (err, results) => {
         if (err) {
+            // Step 2.3: Handle Errors
             console.error('Error fetching assignments:', err);
             res.status(500).send('Error retrieving assignments data');
         } else {
+            // Step 2.4: Send Results
             //console.log('Found assignments:', results.length);
             res.json(results);
         }
     });
 };
-
+//Step 3: Export the functions so they can be used in server.js or other parts of the application.
 module.exports = {
     getAssignments
 };

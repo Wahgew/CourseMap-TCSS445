@@ -1,11 +1,11 @@
 //Elias Arriola
-//The following file is the backend of query1.html which queries for department information.
+//The following file is the backend of query1.html which queries for professor information.
 // Step 1: Import Required Libraries 
 // Import the database configuration to interact with the MySQL database. 
 const db = require('../dbConfig'); 
  
 // Step 2: Define Controller Functions 
-// This function constructs a SQL query to retrieve basic department information  
+// This function constructs a SQL query to retrieve basic professor information  
  // (ProfEmail) and sends the results as JSON.
  const getAllProfessors = (req, res) => { 
   // Step 2.1: Construct SQL Query 
@@ -27,8 +27,11 @@ const db = require('../dbConfig');
   }); 
 }; 
  
-// Fetches detailed information for a specific department. 
-// The details include the departments name, employee count, average salary, max salary, minimum salary, project count, and budget. 
+/** Lists each professor’s full name,
+ * the courses they teach, 
+ * and the types of assignments in each course 
+ * along with the average student time spent. 
+ * */ 
 const getProfessorDetails = (req, res) => { 
   // Step 3.1: Extract Parameters 
   const { ProfEmail } = req.query; 
