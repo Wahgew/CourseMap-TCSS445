@@ -10,7 +10,7 @@ const db = require('../dbConfig');
  const getAllProfessors = (req, res) => { 
   // Step 2.1: Construct SQL Query 
   const query = ` 
-    SELECT  ProfEmail 
+    SELECT  ProfEmail, CONCAT(FName, ' ',LName) as Name 
     FROM PROFESSOR 
   `; 
  
@@ -46,7 +46,8 @@ const getProfessorDetails = (req, res) => {
        A.StuAvgTime
 FROM professor P
 JOIN course C ON P.ProfEmail = C.ProfEmail
-JOIN assignments A ON C.CourseID = A.CourseID;
+JOIN assignments A ON C.CourseID = A.CourseID
+WHERE P.ProfEmail = ?
 
   `; 
  
