@@ -5,7 +5,7 @@ const app = express();
 // Step 2: Import Controllers 
 // Import the required controllers to handle controller-related routes. 
 const query1Controller = require('./controllers/query1'); 
-
+const query2Controller = require('./controllers/query2');
 const query3Controller = require('./controllers/query3');
 const query4Controller = require('./controllers/query4');
 const query5Controller = require('./controllers/query5') 
@@ -23,8 +23,7 @@ app.use(express.static('public'));
 app.get('/query1', query1Controller.getAllProfessors); 
 app.get('/query1/details', query1Controller.getProfessorDetails);
 
-
-
+app.get('/query2/courses', query2Controller.getCourses); 
 
 app.get('/query3/performance', query3Controller.getStudentPerformance);
 
