@@ -20,7 +20,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="query7.html">Professor Statistics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="query4.html">Professor Statistics</a></li>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-sm-2" type="search" placeholder="Search">
@@ -34,7 +34,13 @@
         <div class="container">
             <div class="feature-box">
                 <h2>Professor Assignment Statistics</h2>
-                <div class="mt-4" id="resultSection">
+                <div class="mb-3">
+                    <label for="professorDropdown" class="form-label">Select a Professor:</label>
+                    <select id="professorDropdown" class="form-control">
+                        <option value="">Select a name</option>
+                    </select>
+                </div>
+                <div class="mt-4" id="resultSection" style="display: none;">
                     <table class="table table-bordered table-striped">
                         <thead class="table-dark">
                             <tr>
@@ -56,27 +62,79 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
+            const dropdown = document.getElementById('professorDropdown');
+            const resultSection = document.getElementById('resultSection');
             const resultTableBody = document.getElementById('resultTableBody');
-
+    
             try {
-                const response = await fetch('/query7');
-                const data = await response.json();
-
-                resultTableBody.innerHTML = '';
-
-                data.forEach(prof => {
-                    resultTableBody.innerHTML += `
-                        <tr>
-                            <td>${prof.FirstName} ${prof.LastName}</td>
-                            <td>${prof.ProfEmail}</td>
-                            <td>${prof.Total_Assignments}</td>
-                            <td>${prof.AverageAssignmentTime}</td>
-                        </tr>
-                    `;
-                });
+                console.log('Fetching professors...');
+                const response = await fetch('/query4/professors');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const professors = await response.json();
+                console.log('Received professors:', professors);
+                
+                if (professors && professors.length > 0) {
+                    professors.forEach(professor => {
+                        const option = document.createElement('option');
+                        option.value = professor.ProfEmail;
+                        option.textContent = `${professor.FName} ${professor.LName}`;
+                        dropdown.appendChild(option);
+                    });
+                } else {
+                    console.log('No professors found in the response');
+                }
             } catch (error) {
-                console.error('Error fetching professor statistics:', error);
+                console.error('Error fetching professors:', error);
+               
+                dropdown.innerHTML += '<option value="">Error loading professors</option>';
             }
+    
+            dropdown.addEventListener('change', async (event) => {
+                const ProfEmail = event.target.value;
+                console.log('Selected professor:', ProfEmail);
+    
+                if (!ProfEmail) {
+                    resultSection.style.display = 'none';
+                    return;
+                }
+    
+                try {
+                    console.log('Fetching stats...');
+                    const response = await fetch(`/query4/stats?ProfEmail=${encodeURIComponent(ProfEmail)}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('Received stats:', data);
+    
+                    resultTableBody.innerHTML = '';
+                    resultSection.style.display = 'block';
+    
+                    if (data.length > 0) {
+                        const prof = data[0];
+                        resultTableBody.innerHTML = `
+                            <tr>
+                                <td>${prof.FirstName} ${prof.LastName}</td>
+                                <td>${prof.ProfEmail}</td>
+                                <td>${prof.Total_Assignments}</td>
+                                <td>${prof.AverageAssignmentTime}</td>
+                            </tr>
+                        `;
+                    } else {
+                        resultTableBody.innerHTML = '<tr><td colspan="4">No data found.</td></tr>';
+                    }
+                } catch (error) {
+                    console.error('Error fetching professor statistics:', error);
+                    resultTableBody.innerHTML = '<tr><td colspan="4">Error loading statistics</td></tr>';
+                    resultSection.style.display = 'block';
+                }
+            });
         });
     </script>
 </body>
