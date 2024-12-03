@@ -2,7 +2,6 @@ const db = require('../dbConfig');
 
 // Get all assignments that take more than 5 hours
 const getLongAssignments = (req, res) => {
-    console.log('Fetching all long assignments...');
     
     const query = `
         SELECT 

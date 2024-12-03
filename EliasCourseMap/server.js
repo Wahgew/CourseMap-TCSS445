@@ -5,7 +5,10 @@ const app = express();
 // Step 2: Import Controllers 
 // Import the required controllers to handle controller-related routes. 
 const query1Controller = require('./controllers/query1'); 
+
+
 const query4Controller = require('./controllers/query4');
+const query5Controller = require('./controllers/query5') 
 
 // Step 3: Middleware Setup 
 // Use express.json() to parse incoming JSON requests. 
@@ -22,6 +25,8 @@ app.get('/query1/details', query1Controller.getProfessorDetails);
 
 //
 app.get('/query4',query4Controller.getProfessorStats);
+
+app.get('/query5/longAssignments', query5Controller.getLongAssignments);
 // Step 5: Start the Server 
 // Define the port the server will listen on, defaulting to 5000 if not specified in environment variables.
 const PORT = process.env.PORT || 5000;  
