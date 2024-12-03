@@ -2,7 +2,7 @@ const db = require('../dbConfig');
 
 // Get all courses that take more than 10 hours
 const getCourses = (req, res) => {
-    console.log('Fetching all Courses...');
+    
     
     const query = `
         SELECT DISTINCT
