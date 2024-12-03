@@ -104,10 +104,12 @@
 
                     resultTableBody.innerHTML = ''; // Clear previous results 
                     resultSection.style.display = 'block'; 
-
+                    
                     if (data.length > 0) { 
-                        const { ProfessorName, CourseName, AssignmentType, StuAvgTime } = data[0]; 
-                        resultTableBody.innerHTML = ` 
+                        // Loop through each row in the data and create a table row for each 
+                        data.forEach(row => { 
+                        const { ProfessorName, CourseName, AssignmentType, StuAvgTime } = row; 
+                        const tableRow = ` 
                             <tr> 
                                 <td>${ProfessorName}</td> 
                                 <td>${CourseName}</td> 
@@ -115,6 +117,8 @@
                                 <td>${StuAvgTime}</td> 
                             </tr> 
                         `; 
+                        resultTableBody.insertAdjacentHTML('beforeend', tableRow); 
+                        });
                     } else { 
                         resultTableBody.innerHTML = `<tr><td colspan="5">No data found.</td></tr>`; 
                     } 
