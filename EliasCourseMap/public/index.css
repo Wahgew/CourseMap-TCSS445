@@ -272,6 +272,20 @@ footer p {
     color: black;
 }
 
+.github-link {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.github-link img {
+    transition: opacity 0.2s ease;
+}
+
+.github-link:hover img {
+    opacity: 0.7;
+}
+
 .image_text-container {
     display: flex;
     justify-content: center;
