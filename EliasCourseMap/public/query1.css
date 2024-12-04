@@ -183,6 +183,11 @@ body, label, .form-label, .form-control, .nav-link {
     font-weight: 600;
 }
 
+#professorDropdown, #professorDropdown option {
+    font-family: "Poppins", sans-serif;
+    font-weight: bold; /* Make the dropdown text bold */
+}
+
 .error-message {
     font-family: "Poppins", sans-serif;
     color: red; 
