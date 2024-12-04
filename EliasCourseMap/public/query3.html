@@ -1,39 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time-Intensive Assignments</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css">
-    <style>
-        .content-section { padding: 2rem 0; }
-        .feature-box { padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;
-                      background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    </style>
+    <link rel="stylesheet" href="query1.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <div class="container">
-            <a class="navbar-brand" href="index.html"><i class="fas fa-database"></i> TCSS 445 | COURSE MAP</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html"> Home </a></li>
-                    <li class="nav-item"><a class="nav-link" href="query1.html">Professor</a></li>
-                    <li class="nav-item"><a class="nav-link" href="query2.html">Course</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="query3.html">Student </a></li>
-                    <li class="nav-item"><a class="nav-link" href="query4.html">Assignment </a></li>
-                    <li class="nav-item"><a class="nav-link" href="query5.html">Long Assignments</a></li> 
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>   <!-- change this or delete-->
-                </form>
-            </div>
+    <header>
+        <div class="logo">
+            <img src="/assets/logo.png" alt="Logo">
+            <h1>CourseMap</h1>
         </div>
-    </nav>
+        <input type="checkbox" id="nav_check" hidden>
+        <nav>
+            <ul>
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="query1.html">Professor</a></li>
+                <li class="nav-item"><a class="nav-link" href="query2.html">Course</a></li>
+                <li class="nav-item"><a class="nav-link" href="query3.html">Student</a></li>
+                <li class="nav-item"><a class="nav-link" href="query4.html">Assignment</a></li>
+                <li class="nav-item"><a class="nav-link" href="query5.html">Long Assignments</a></li>
+            </ul>
+        </nav>
+        <label for="nav_check" class="NavLanscapeStyle">
+            <div></div>
+            <div></div>
+            <div></div>
+        </label>
+    </header>
 
     <div class="content-section">
         <div class="container">
