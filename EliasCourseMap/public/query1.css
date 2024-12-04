@@ -188,12 +188,6 @@ body, label, .form-label, .form-control, .nav-link {
     font-weight: bold; /* Make the dropdown text bold */
 }
 
-.error-message {
-    font-family: "Poppins", sans-serif;
-    color: red; 
-    font-weight: 600;
-}
-
 /* Small screen adjustments */
 @media only screen and (max-width: 1100px) {
     header {
