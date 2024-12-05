@@ -1,6 +1,7 @@
 // Step 1: Import Required Libraries 
 const express = require('express'); 
 const app = express(); 
+const path = require('path'); 
 
 // Step 2: Import Controllers 
 // Import the required controllers to handle controller-related routes. 
@@ -15,6 +16,8 @@ const query5Controller = require('./controllers/query5')
 // Use express.static() to serve static files from the 'public' directory. 
 app.use(express.json()); 
 app.use(express.static('public')); 
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/stylesheets', express.static(path.join(__dirname, 'stylesheets')));
 
 // Step 4: Define Routes 
 // Set up a GET route for '/employee', '/department', '/project', '/worksOn' that invokes the getAll method  
