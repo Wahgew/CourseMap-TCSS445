@@ -1,3 +1,4 @@
+//Ahmed Hassan
 //The following file is the backend of query4.html which queries for professor information.
 // Step 1: Import Required Libraries
 // Import the database configuration to interact with the MySQL database.
