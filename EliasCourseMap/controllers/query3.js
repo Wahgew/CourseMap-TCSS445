@@ -1,4 +1,5 @@
-//The following file is the backend of query3.html which queries for Course information.
+//Ahmed Hassan 
+//The following file is the backend of query3.html which corresponds to query 5 in the final script.
 // Step 1: Import Required Libraries 
 // Import the database configuration to interact with the MySQL database.
 const db = require('../dbConfig');
