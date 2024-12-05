@@ -12,18 +12,16 @@ const getAssignments = (req, res) => {
     // Step 2.1: Construct SQL Query
     const query = `
         SELECT ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
-        FROM ASSIGNMENTS
-        JOIN COURSE ON ASSIGNMENTS.CourseID = COURSE.CourseID
-        WHERE ASSIGNMENTS.StuAvgTime > 3.0
-        AND ASSIGNMENTS.AssignID IN (
-            SELECT ASSIGNMENTS.AssignID
-            FROM ASSIGNMENTS
-            JOIN COURSE ON ASSIGNMENTS.CourseID = COURSE.CourseID
-            JOIN TIME_RECORD ON ASSIGNMENTS.AssignID = TIME_RECORD.AssignID
-            GROUP BY ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
-            HAVING COUNT(DISTINCT TIME_RECORD.StudentEmail) >= 3
-        )
-        ORDER BY ASSIGNMENTS.StuAvgTime DESC;
+FROM ASSIGNMENTS
+JOIN COURSE ON ASSIGNMENTS.CourseID = COURSE.CourseID
+WHERE ASSIGNMENTS.StuAvgTime > 3.0
+INTERSECT
+SELECT ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
+FROM ASSIGNMENTS
+JOIN COURSE ON ASSIGNMENTS.CourseID = COURSE.CourseID
+JOIN TIME_RECORD ON ASSIGNMENTS.AssignID = TIME_RECORD.AssignID
+GROUP BY ASSIGNMENTS.AssignID, COURSE.CourseName, ASSIGNMENTS.AssignmentType, ASSIGNMENTS.StuAvgTime
+HAVING COUNT(DISTINCT TIME_RECORD.StudentEmail) >= 3;
     `;
     // Step 2.2: Execute the Query
     db.query(query, (err, results) => {
