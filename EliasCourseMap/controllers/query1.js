@@ -1,5 +1,5 @@
 //Elias Arriola
-//The following file is the backend of query1.html which queries for professor information.
+//The following file is the backend of query1.html which corresponds to query 1 in the final script.
 // Step 1: Import Required Libraries 
 // Import the database configuration to interact with the MySQL database. 
 const db = require('../dbConfig'); 
