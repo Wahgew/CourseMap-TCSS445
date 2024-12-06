@@ -28,17 +28,38 @@ const getLongAssignments = (req, res) => {
   
    // Step 2.2: Execute Database Query
    db.query(query, (err, results) => {
-       if (err) {
-           // Step 2.3: Handle Error Cases
-           console.error('Error fetching long assignments:', err);
-           res.status(500).send('Error retrieving long assignments');
-       } else {
-           // Step 2.4: Send Successful Response
-           // Commented console.log for debugging purposes
-           //console.log('Found assignments:', results);
-           res.json(results);
-       }
-   });
+    if (err) {
+        console.error('Error fetching long assignments:', err);
+        return res.status(500).render('error', { message: 'Error retrieving long assignments' });
+    }
+
+     // Generate the table rows HTML
+     let tableRows = '';
+     results.forEach(row => {
+         tableRows += `
+             <tr>
+                 <td>${row.ProfessorName} ${row.LastName}</td>
+                 <td>${row.CourseName}</td>
+                 <td>${row.AssignID}</td>
+                 <td>${row.StuAvgTime}</td>
+             </tr>`;
+     });// Send the complete page with the generated table
+     res.send(`
+         <table class="table table-bordered table-striped">
+             <thead class="table-dark">
+                 <tr>
+                     <th>Professor Name</th>
+                     <th>Course Name</th>
+                     <th>Assignment ID</th>
+                     <th>Average Time (hours)</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 ${tableRows}
+             </tbody>
+         </table>
+     `);
+ });
 };
 
 // Step 3: Export Controller Function

@@ -17,111 +17,42 @@
                 <h1>CourseMap</h1>
             </div>
         </a>
-        <input type="checkbox" id="nav_check" hidden>
         <nav>
             <ul>
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="query1.html">Professor</a></li>
-                <li class="nav-item"><a class="nav-link" href="query2.html">Course</a></li>
-                <li class="nav-item"><a class="nav-link" href="query3.html">Student</a></li>
-                <li class="nav-item"><a class="nav-link" href="query4.html">Assignment</a></li>
-                <li class="nav-item"><a class="nav-link" href="query5.html">Long Assignments</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="query1.html">Professor</a></li>
+                <li><a href="query2.html">Course</a></li>
+                <li><a href="query3.html">Student</a></li>
+                <li><a href="query4.html">Assignment</a></li>
+                <li><a href="query5.html" class="active">Long Assignments</a></li>
             </ul>
         </nav>
-        <label for="nav_check" class="NavLanscapeStyle">
-            <div></div>
-            <div></div>
-            <div></div>
-        </label>
     </header>
 
     <div class="content-section">
         <div class="container">
             <div class="feature-box">
                 <h2>Long Assignments (Over 5 Hours)</h2>
-                <div class="mb-3">
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        class="form-control" 
-                        placeholder="Search by professor name or course..."
-                    >
-                </div>
-                <div class="mt-4" id="resultSection">
-                    <table class="table table-bordered table-striped">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Professor Name</th>
-                                <th>Course Name</th>
-                                <th>Assignment ID</th>
-                                <th>Average Time (hours)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="resultTableBody"></tbody>
-                    </table>
+                <div class="mt-4" id="tableContainer">
+                    <!-- Table will be inserted here by server -->
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const searchInput = document.getElementById('searchInput');
-            const resultTableBody = document.getElementById('resultTableBody');
-            let allAssignments = [];
-
-           
-            const filterAndDisplayAssignments = (searchTerm = '') => {
-                const filteredAssignments = allAssignments.filter(assignment => {
-                    const searchString = `${assignment.ProfessorName} ${assignment.LastName} ${assignment.CourseName}`.toLowerCase();
-                    return searchString.includes(searchTerm.toLowerCase());
+        // Fetch and insert the table when the page loads
+        window.onload = function() {
+            fetch('/query5/longAssignments')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('tableContainer').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('tableContainer').innerHTML = 'Error loading assignments';
                 });
-
-                resultTableBody.innerHTML = '';
-                
-                if (filteredAssignments.length > 0) {
-                    filteredAssignments.forEach(assignment => {
-                        resultTableBody.innerHTML += `
-                            <tr>
-                                <td>${assignment.ProfessorName} ${assignment.LastName}</td>
-                                <td>${assignment.CourseName}</td>
-                                <td>${assignment.AssignID}</td>
-                                <td>${assignment.StuAvgTime}</td>
-                            </tr>
-                        `;
-                    });
-                } else {
-                    resultTableBody.innerHTML = '<tr><td colspan="4">No matching assignments found.</td></tr>';
-                }
-            };
-
-            
-            try {
-                console.log('Fetching long assignments...');
-                const response = await fetch('/query5/longAssignments');  //changes this file route later
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                allAssignments = await response.json();
-                console.log('Received assignments:', allAssignments);
-                
-                
-                filterAndDisplayAssignments();
-            } catch (error) {
-                console.error('Error fetching assignments:', error);
-                resultTableBody.innerHTML = '<tr><td colspan="4">Error loading assignments</td></tr>';
-            }
-
-            
-            searchInput.addEventListener('input', (e) => {
-                filterAndDisplayAssignments(e.target.value);
-            });
-        });
+        };
     </script>
 </body>
 </html>
