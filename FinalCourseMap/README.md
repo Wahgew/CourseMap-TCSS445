@@ -37,7 +37,7 @@ Create a .env file in the backend directory with the following:
 DB_HOST=localhost # Database host
 DB_USER=tcss445-user  # Replace with your MySQL username
 DB_PASSWORD=mypassword # Replace with your MySQL password
-DB_NAME=coursemap # Database name for COMPANY database
+DB_NAME=coursemap # Database name for coursemap database
 
 # Server Port
 DB_PORT=3306
