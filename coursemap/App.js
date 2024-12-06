@@ -12,39 +12,39 @@ const timeRecordController = require('./controllers/timeRecord');
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // Routes for the frontend pages
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'index.html'));
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'views', 'index.html'));
+// });
 
-app.get('/professor', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'professor.html'));
-});
+// app.get('/professor', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'views', 'professor.html'));
+// });
 
-app.get('/course', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'course.html'));
-});
+// app.get('/course', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'views', 'course.html'));
+// });
 
-app.get('/student', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'student.html'));
-});
+// app.get('/student', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'views', 'student.html'));
+// });
 
-app.get('/assignment', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'assignment.html'));
-});
+// app.get('/assignment', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'views', 'assignment.html'));
+// });
 
 // API Routes
-app.get('/api/professors', professorController.getAllProfessors);
-app.get('/api/professors/details', professorController.getProfessorDetails);
-app.get('/api/courses', courseController.getAllCourses);
-app.get('/api/courses/details', courseController.getCourseDetails);
-app.get('/api/students', studentController.getAllStudents);
-app.get('/api/students/details', studentController.getStudentDetails);
-app.get('/api/assignments', assignmentController.getDetailedAssignments);
-app.get('/api/assignments/details', assignmentController.getAssignmentDetails);
-app.post('/api/timerecords', timeRecordController.addTimeRecord);
+app.get('/professor', professorController.getAllProfessors);
+app.get('/professor/details', professorController.getProfessorDetails);
+app.get('/course', courseController.getAllCourses);
+app.get('/course/details', courseController.getCourseDetails);
+app.get('/student', studentController.getAllStudents);
+app.get('/student/details', studentController.getStudentDetails);
+app.get('/assignment', assignmentController.getDetailedAssignments);
+app.get('/assignment/details', assignmentController.getAssignmentDetails);
+app.post('/timeRecord', timeRecordController.addTimeRecord);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
