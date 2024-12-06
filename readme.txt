@@ -7,7 +7,8 @@ CourseMap is a web application designed to help UWT computer science students es
 * **Frontend**: HTML5, CSS3, JavaScript
 * **Backend**: Node.js, Express.js
 * **Database**: MySQL
-* **Styling**: Custom CSS 
+* **Styling**: Custom CSS
+* **Cloud Service**: Google Cloud Platform
 
 ## Getting Started
 
