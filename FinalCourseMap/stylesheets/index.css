@@ -274,13 +274,16 @@ footer p {
 }
 
 .github-link {
-    position: absolute;
+    position: fixed;  
     right: 20px;
     bottom: 20px;
+    z-index: 100;  
 }
 
 .github-link img {
     transition: opacity 0.2s ease;
+    width: 24px;
+    height: 24px;
 }
 
 .github-link:hover img {
